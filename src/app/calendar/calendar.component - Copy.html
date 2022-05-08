@@ -1,0 +1,98 @@
+<div class="mohammad" style="height: 5%; overflow: auto">
+</div>
+<div >
+<table style="table-layout: fixed; width: 100%; background-color:darkcyan;">
+  <tr>
+    <td style="width:25%;">
+      <div>
+        <select matNativeControl required [(ngModel)]="dropselectvalue" >
+          <option value=0>All</option>
+          <option *ngFor="let l of labels" [value]="l.id">{{l.text}}</option>
+        </select>
+      </div>
+    
+    </td>
+    <td style="width:25%;">Current Week:  {{CrntYear}} - {{CrntWeek}}  </td>
+    <td style="width:25%;">
+      
+      Display Week : <input  onKeyDown="return false" min="1" max="52" style="width:50px" id="week" type="number" [(ngModel)]="CalendarWeek"  />
+
+      
+
+    </td>
+    <td style="width:25%;">
+      <mat-slide-toggle [(ngModel)]="checked" class="example-margin" [color]="color" (change)="dark()">
+      Dark Mode {{checked}}
+      </mat-slide-toggle>
+    </td>
+  </tr>
+</table>
+
+</div>
+
+
+      
+
+<div style="height: 80%; overflow: auto">
+
+<table border="1">
+
+  <thead>
+    <th style="background-color:cornflowerblue"></th>
+    <th style="text-align:center;" *ngFor="let day of getCurrentWeek(CalendarWeek)">
+      {{day}}
+    </th>
+  </thead>
+
+
+
+  <tbody>
+
+    <tr *ngFor="let l of labels | filter2:dropselectvalue">
+
+      <td style="width:10%; text-align: center;"><strong>{{l.text}}</strong></td>
+
+
+      <th style="width:18%;" *ngFor="let day of getCurrentWeek(CalendarWeek)">
+
+        <div *ngFor="let note of notes| filter:l.text:day">
+<!--
+          <div class="cdk-virtual-scroll-data-source-example">
+            <cdk-virtual-scroll-viewport orientation="horizontal" itemSize="50" class="example-viewport">
+-->
+              <div class="card">
+                <div class="card-header">
+                  <h4 class="card-title">
+                    <strong>#{{ note.id }} - </strong>
+                    <strong [innerHtml]="subtext(1,note.title)"></strong>
+                    
+                  </h4>
+                 
+                      
+                    <div style="font-size:smaller" [innerHtml]="subtext(2,note.summary)"></div>
+
+
+                </div>
+                <div class="card-category" style="padding-left:10px;font-size: smaller;">
+
+                  Start Date : {{ toDate(note.startDate) }} 
+                  <br />
+                  Duration : {{ calculateDuration(note.startDate, note.endDate) }} days
+                </div>
+              </div>
+              <br/>
+              <!--
+            </cdk-virtual-scroll-viewport>
+          </div>
+-->
+        </div>
+      </th>
+
+    </tr>
+
+  </tbody>
+
+</table>
+</div>
+<div class="mohammad" style="height: 5%; overflow: auto">
+</div>
